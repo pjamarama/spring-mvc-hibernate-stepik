@@ -30,7 +30,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
-      <version>6.0.3</version>
+      <version>5.2.9.RELEASE</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
     <dependency>
@@ -42,8 +42,7 @@
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
-      <version>6.1.7.Final</version>
-      <type>pom</type>
+      <version>5.4.22.Final</version>
     </dependency>
     <dependency>
       <groupId>org.postgresql</groupId>
@@ -54,13 +53,13 @@
     <dependency>
       <groupId>com.mchange</groupId>
       <artifactId>c3p0</artifactId>
-      <version>0.9.5.5</version>
+      <version>0.9.5.2</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/org.springframework/spring-orm -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-orm</artifactId>
-      <version>6.0.3</version>
+      <version>5.2.9.RELEASE</version>
     </dependency>
   </dependencies>
 
