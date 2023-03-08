@@ -5,5 +5,7 @@ import com.agrokhotov.spring.mvc_hibernate_aop.entity.Employee;
 import java.util.List;
 
 public interface EmployeeDao {
-    public List<Employee> getAllEmployees();
+    List<Employee> getAllEmployees();
+
+    void saveEmployee(Employee employee);
 }

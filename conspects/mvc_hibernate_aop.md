@@ -56,3 +56,39 @@ VALUES ('Zaur', 'Tregulov', 'IT', 500),
 ![img.png](pics/img2.png)
 
 Управление транзакциями будет осущетсвляться на уровне сервиса, поэтому @Transactonal используем в сервисах, а не в репозиториях.
+
+### Добавление нового работника
+Добавляем кнопку в форму.
+
+Создаем новый метод в контроллере. Метод принимает модель, добавляет в ее аттрибуты новый объект Employee, возвращает имя вью employee-info:
+```java
+@RequestMapping("/addNewEmployee")
+public String addNewEmployee(Model model) {
+    Employee employee = new Employee();
+    model.addAttribute("employee", employee);
+    return "employee-info";
+}
+```
+В EmployeeDAO (в имплементации) создаем метод, сохраняющий работника:
+```java
+public void saveEmployee(Employee employee) {
+    Session session = sessionFactory.getCurrentSession();
+    session.save(employee);
+    }
+```
+
+Создаем в сервисе метод, сохраняющий работника в базе:
+```java
+public void saveEmployee(Employee employee);
+```
+
+Создаем вью employee-info. В _form:form action_ прописываем значение @RequestMapping метода, который будет сохранять нового работника (public String saveEmployee()).
+
+Создаем в контроллере метод для сохранения работника, public String saveEmployee(). Метод должен сохранять работника, поэтому он принимает из формы объект Employee с уже заполненными данными.
+```java
+@RequestMapping("/saveEmployee")
+public String saveEmployee(@ModelAttribute("employee") Employee employee) {
+    employeeService.saveEmployee(employee);
+    return "redirect:/";
+}
+```
