@@ -69,6 +69,8 @@ public String addNewEmployee(Model model) {
     return "employee-info";
 }
 ```
+В этом методе мы испльзуем no args constructor, поэтому отображаемая форма будет иметь пустые поля.
+
 В EmployeeDAO (в имплементации) создаем метод, сохраняющий работника:
 ```java
 public void saveEmployee(Employee employee) {
@@ -92,3 +94,22 @@ public String saveEmployee(@ModelAttribute("employee") Employee employee) {
     return "redirect:/";
 }
 ```
+
+### Изменение работника
+Переиспользуем вью для добавления нового работника таким образом, чтоб он использовался и для изменения существующего работника. Метод saveEmployee() также будет переиспользован. Так же добавим во вью кнопку Update, в которой будет храниться id работника.
+
+В контроллере добавляем метод updateEmployee(). Метод получает работника с id, прописынным в кнопке Update, поэтому в параметрах метода можно использовать этот id с помощью @RequestParam. Чтобы отобразить вью EmployeeInfo с уже заполненными формами, мы должны послать ему модель, которая в качестве аттрибута будет содержать работника. Поэтому в параметрах метода так же прописываем модель.
+
+В методе updateEmployee() нам нужно получить работника по его id и добавить его в аттрибут модели. Для этого в EmployeeService добавляем метод getEmployee(). В EmployeeDao добавляем метод getEmployee(). Так как в методе используется не пустой работник, а работник из базы, поля во вью будут уже заполнены.
+```java
+@RequestMapping("/updateInfo")
+public String updateEmployee(@RequestParam("empId") int id, Model model) {
+    Employee employee = employeeService.getEmployee(id);
+    model.addAttribute("employee", employee);
+    return "employee-info";
+}
+```
+
+Во вью для сохранения работника ("employee-info") мы создадим скрытую форму для хранения id. Она будет заполнена id, так же, как и остальные поля данными о работнике из базы.
+
+В репозитории модифицируем метод saveEmployee(), изменив session.save() на .saveOrUpdate(). При айдишнике, равном 0, произойдет добавление нового работника, при айдишнике, отличном от нуля, изменение существующего работника.
