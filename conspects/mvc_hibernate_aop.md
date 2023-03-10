@@ -113,3 +113,27 @@ public String updateEmployee(@RequestParam("empId") int id, Model model) {
 Во вью для сохранения работника ("employee-info") мы создадим скрытую форму для хранения id. Она будет заполнена id, так же, как и остальные поля данными о работнике из базы.
 
 В репозитории модифицируем метод saveEmployee(), изменив session.save() на .saveOrUpdate(). При айдишнике, равном 0, произойдет добавление нового работника, при айдишнике, отличном от нуля, изменение существующего работника.
+
+### Удаление работника
+Создаем кнопку для удаления. Удаление будет происходить по id, айдишник хранится в кнопке.
+
+Создаем в контроллере метод deleteMapping(). В параметрах метода указываем айдишник пользователя. В результате работы метода должен возвращаться вью all-employees, поэтому возвращаемое значение - "redirect:/"
+
+Прописываем метод для удаления работника в EmployeeService, 
+```java
+@Override
+@Transactional
+public void deleteEmployee(int id) {
+    employeeDao.deleteEmployee(id);
+}
+```
+EmployeeDao и их имплементациях:
+```java
+@Override
+public void deleteEmployee(int id) {
+    Session session = sessionFactory.getCurrentSession();
+    Query<Employee> query = session.createQuery("delete from Employee where id = :employeeId");
+    query.setParameter("employeeId", id);
+    query.executeUpdate();
+}
+```
